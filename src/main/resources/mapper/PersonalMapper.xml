@@ -1,0 +1,338 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="personnel.zpark.dao.PersonalMapper">
+  <resultMap id="BaseResultMap" type="personnel.zpark.model.Personal">
+    <id column="Teacher_ID" jdbcType="INTEGER" property="teacherId" />
+    <result column="Teacher_Passwd" jdbcType="VARCHAR" property="teacherPasswd" />
+    <result column="Teacher_Name" jdbcType="VARCHAR" property="teacherName" />
+    <result column="Department_Name" jdbcType="INTEGER" property="departmentName" />
+    <result column="Skill_Time" jdbcType="INTEGER" property="skillTime" />
+    <result column="School" jdbcType="VARCHAR" property="school" />
+    <result column="Graduation_Time" jdbcType="DATE" property="graduationTime" />
+    <result column="Graduation_Profession" jdbcType="VARCHAR" property="graduationProfession" />
+    <result column="Now_Profession" jdbcType="VARCHAR" property="nowProfession" />
+    <result column="Work_Time" jdbcType="DATE" property="workTime" />
+    <result column="Title" jdbcType="INTEGER" property="title" />
+    <result column="Nature" jdbcType="INTEGER" property="nature" />
+    <result column="Teacher_Kind" jdbcType="INTEGER" property="teacherKind" />
+  </resultMap>
+  <sql id="Example_Where_Clause">
+    <where>
+      <foreach collection="oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause">
+    <where>
+      <foreach collection="example.oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List">
+    Teacher_ID, Teacher_Passwd, Teacher_Name, Department_Name, Skill_Time, School, Graduation_Time, 
+    Graduation_Profession, Now_Profession, Work_Time, Title, Nature, Teacher_Kind
+  </sql>
+  <select id="selectByExample" parameterType="personnel.zpark.model.PersonalExample" resultMap="BaseResultMap">
+    select
+    <if test="distinct">
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from personal
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null">
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from personal
+    where Teacher_ID = #{teacherId,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from personal
+    where Teacher_ID = #{teacherId,jdbcType=INTEGER}
+  </delete>
+  <delete id="deleteByExample" parameterType="personnel.zpark.model.PersonalExample">
+    delete from personal
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="personnel.zpark.model.Personal">
+    insert into personal (Teacher_ID, Teacher_Passwd, Teacher_Name, 
+      Department_Name, Skill_Time, School, 
+      Graduation_Time, Graduation_Profession, Now_Profession, 
+      Work_Time, Title, Nature, 
+      Teacher_Kind)
+    values (#{teacherId,jdbcType=INTEGER}, #{teacherPasswd,jdbcType=VARCHAR}, #{teacherName,jdbcType=VARCHAR}, 
+      #{departmentName,jdbcType=INTEGER}, #{skillTime,jdbcType=INTEGER}, #{school,jdbcType=VARCHAR}, 
+      #{graduationTime,jdbcType=DATE}, #{graduationProfession,jdbcType=VARCHAR}, #{nowProfession,jdbcType=VARCHAR}, 
+      #{workTime,jdbcType=DATE}, #{title,jdbcType=INTEGER}, #{nature,jdbcType=INTEGER}, 
+      #{teacherKind,jdbcType=INTEGER})
+  </insert>
+  <insert id="insertSelective" parameterType="personnel.zpark.model.Personal">
+    insert into personal
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="teacherId != null">
+        Teacher_ID,
+      </if>
+      <if test="teacherPasswd != null">
+        Teacher_Passwd,
+      </if>
+      <if test="teacherName != null">
+        Teacher_Name,
+      </if>
+      <if test="departmentName != null">
+        Department_Name,
+      </if>
+      <if test="skillTime != null">
+        Skill_Time,
+      </if>
+      <if test="school != null">
+        School,
+      </if>
+      <if test="graduationTime != null">
+        Graduation_Time,
+      </if>
+      <if test="graduationProfession != null">
+        Graduation_Profession,
+      </if>
+      <if test="nowProfession != null">
+        Now_Profession,
+      </if>
+      <if test="workTime != null">
+        Work_Time,
+      </if>
+      <if test="title != null">
+        Title,
+      </if>
+      <if test="nature != null">
+        Nature,
+      </if>
+      <if test="teacherKind != null">
+        Teacher_Kind,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="teacherId != null">
+        #{teacherId,jdbcType=INTEGER},
+      </if>
+      <if test="teacherPasswd != null">
+        #{teacherPasswd,jdbcType=VARCHAR},
+      </if>
+      <if test="teacherName != null">
+        #{teacherName,jdbcType=VARCHAR},
+      </if>
+      <if test="departmentName != null">
+        #{departmentName,jdbcType=INTEGER},
+      </if>
+      <if test="skillTime != null">
+        #{skillTime,jdbcType=INTEGER},
+      </if>
+      <if test="school != null">
+        #{school,jdbcType=VARCHAR},
+      </if>
+      <if test="graduationTime != null">
+        #{graduationTime,jdbcType=DATE},
+      </if>
+      <if test="graduationProfession != null">
+        #{graduationProfession,jdbcType=VARCHAR},
+      </if>
+      <if test="nowProfession != null">
+        #{nowProfession,jdbcType=VARCHAR},
+      </if>
+      <if test="workTime != null">
+        #{workTime,jdbcType=DATE},
+      </if>
+      <if test="title != null">
+        #{title,jdbcType=INTEGER},
+      </if>
+      <if test="nature != null">
+        #{nature,jdbcType=INTEGER},
+      </if>
+      <if test="teacherKind != null">
+        #{teacherKind,jdbcType=INTEGER},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="personnel.zpark.model.PersonalExample" resultType="java.lang.Long">
+    select count(*) from personal
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map">
+    update personal
+    <set>
+      <if test="record.teacherId != null">
+        Teacher_ID = #{record.teacherId,jdbcType=INTEGER},
+      </if>
+      <if test="record.teacherPasswd != null">
+        Teacher_Passwd = #{record.teacherPasswd,jdbcType=VARCHAR},
+      </if>
+      <if test="record.teacherName != null">
+        Teacher_Name = #{record.teacherName,jdbcType=VARCHAR},
+      </if>
+      <if test="record.departmentName != null">
+        Department_Name = #{record.departmentName,jdbcType=INTEGER},
+      </if>
+      <if test="record.skillTime != null">
+        Skill_Time = #{record.skillTime,jdbcType=INTEGER},
+      </if>
+      <if test="record.school != null">
+        School = #{record.school,jdbcType=VARCHAR},
+      </if>
+      <if test="record.graduationTime != null">
+        Graduation_Time = #{record.graduationTime,jdbcType=DATE},
+      </if>
+      <if test="record.graduationProfession != null">
+        Graduation_Profession = #{record.graduationProfession,jdbcType=VARCHAR},
+      </if>
+      <if test="record.nowProfession != null">
+        Now_Profession = #{record.nowProfession,jdbcType=VARCHAR},
+      </if>
+      <if test="record.workTime != null">
+        Work_Time = #{record.workTime,jdbcType=DATE},
+      </if>
+      <if test="record.title != null">
+        Title = #{record.title,jdbcType=INTEGER},
+      </if>
+      <if test="record.nature != null">
+        Nature = #{record.nature,jdbcType=INTEGER},
+      </if>
+      <if test="record.teacherKind != null">
+        Teacher_Kind = #{record.teacherKind,jdbcType=INTEGER},
+      </if>
+    </set>
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map">
+    update personal
+    set Teacher_ID = #{record.teacherId,jdbcType=INTEGER},
+      Teacher_Passwd = #{record.teacherPasswd,jdbcType=VARCHAR},
+      Teacher_Name = #{record.teacherName,jdbcType=VARCHAR},
+      Department_Name = #{record.departmentName,jdbcType=INTEGER},
+      Skill_Time = #{record.skillTime,jdbcType=INTEGER},
+      School = #{record.school,jdbcType=VARCHAR},
+      Graduation_Time = #{record.graduationTime,jdbcType=DATE},
+      Graduation_Profession = #{record.graduationProfession,jdbcType=VARCHAR},
+      Now_Profession = #{record.nowProfession,jdbcType=VARCHAR},
+      Work_Time = #{record.workTime,jdbcType=DATE},
+      Title = #{record.title,jdbcType=INTEGER},
+      Nature = #{record.nature,jdbcType=INTEGER},
+      Teacher_Kind = #{record.teacherKind,jdbcType=INTEGER}
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="personnel.zpark.model.Personal">
+    update personal
+    <set>
+      <if test="teacherPasswd != null">
+        Teacher_Passwd = #{teacherPasswd,jdbcType=VARCHAR},
+      </if>
+      <if test="teacherName != null">
+        Teacher_Name = #{teacherName,jdbcType=VARCHAR},
+      </if>
+      <if test="departmentName != null">
+        Department_Name = #{departmentName,jdbcType=INTEGER},
+      </if>
+      <if test="skillTime != null">
+        Skill_Time = #{skillTime,jdbcType=INTEGER},
+      </if>
+      <if test="school != null">
+        School = #{school,jdbcType=VARCHAR},
+      </if>
+      <if test="graduationTime != null">
+        Graduation_Time = #{graduationTime,jdbcType=DATE},
+      </if>
+      <if test="graduationProfession != null">
+        Graduation_Profession = #{graduationProfession,jdbcType=VARCHAR},
+      </if>
+      <if test="nowProfession != null">
+        Now_Profession = #{nowProfession,jdbcType=VARCHAR},
+      </if>
+      <if test="workTime != null">
+        Work_Time = #{workTime,jdbcType=DATE},
+      </if>
+      <if test="title != null">
+        Title = #{title,jdbcType=INTEGER},
+      </if>
+      <if test="nature != null">
+        Nature = #{nature,jdbcType=INTEGER},
+      </if>
+      <if test="teacherKind != null">
+        Teacher_Kind = #{teacherKind,jdbcType=INTEGER},
+      </if>
+    </set>
+    where Teacher_ID = #{teacherId,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="personnel.zpark.model.Personal">
+    update personal
+    set Teacher_Passwd = #{teacherPasswd,jdbcType=VARCHAR},
+      Teacher_Name = #{teacherName,jdbcType=VARCHAR},
+      Department_Name = #{departmentName,jdbcType=INTEGER},
+      Skill_Time = #{skillTime,jdbcType=INTEGER},
+      School = #{school,jdbcType=VARCHAR},
+      Graduation_Time = #{graduationTime,jdbcType=DATE},
+      Graduation_Profession = #{graduationProfession,jdbcType=VARCHAR},
+      Now_Profession = #{nowProfession,jdbcType=VARCHAR},
+      Work_Time = #{workTime,jdbcType=DATE},
+      Title = #{title,jdbcType=INTEGER},
+      Nature = #{nature,jdbcType=INTEGER},
+      Teacher_Kind = #{teacherKind,jdbcType=INTEGER}
+    where Teacher_ID = #{teacherId,jdbcType=INTEGER}
+  </update>
+</mapper>
