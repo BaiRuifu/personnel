@@ -2,7 +2,7 @@ package personnel.zpark.model;
 
 import java.util.Date;
 
-public class Personal {
+public class  Personal {
     private Integer teacherId;
 
     private String teacherPasswd;
